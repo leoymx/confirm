@@ -2,15 +2,18 @@ package main
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
 func main() {
+	log.Println("ready...")
 	http.HandleFunc("/echo", echo)
-	err := http.ListenAndServe(":80", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if check_err(err) {
 		return
 	}
+	log.Println("go...")
 }
 
 func echo(rw http.ResponseWriter, req *http.Request) {

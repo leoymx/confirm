@@ -9,5 +9,5 @@ ADD . /gopath/app/
 RUN go get github.com/shaalx/echo
 RUN go install github.com/shaalx/echo
 
-EXPOSE 80
+EXPOSE 8080
 CMD ["/gopath/app/bin/echo"]
