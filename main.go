@@ -8,7 +8,7 @@ import (
 
 func main() {
 	log.Println("ready...")
-	http.HandleFunc("/echo", echo)
+	http.HandleFunc("/", echo)
 	err := http.ListenAndServe(":8080", nil)
 	if check_err(err) {
 		return
