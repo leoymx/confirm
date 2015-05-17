@@ -1,8 +1,13 @@
-££which build image you want to use, you can select one from daocloud support list
-image: daocloud/ci-golang:1.4
-££specify environment variables 
-env:
-  - GOPATH = /go
-  ££which scripts you want to run your test
-script:
-  - go run main.go
+FROM google/golang
+MAINTAINER Shaalx Shi "60026668.m@daocloud.io"
+
+# Build app
+WORKDIR /gopath/app
+ENV GOPATH /gopath/app
+ADD . /gopath/app/
+
+RUN go get github.com/shaalx/echo
+RUN go install github.com/shaalx/echo
+
+EXPOSE 80
+CMD ["/gopath/app/bin/echo"]

@@ -7,7 +7,7 @@ import (
 
 func main() {
 	http.HandleFunc("/echo", echo)
-	err := http.ListenAndServe(":8784", nil)
+	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return
 	}
