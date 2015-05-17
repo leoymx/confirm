@@ -17,6 +17,7 @@ func main() {
 }
 
 func echo(rw http.ResponseWriter, req *http.Request) {
+	rw.Write("[ECHO]")
 	q := req.URL.Query()
 	b, err := json.Marshal(q)
 	if check_err(err) {
