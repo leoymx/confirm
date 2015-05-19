@@ -10,7 +10,7 @@ import (
 func main() {
 	log.Println("ready...")
 	http.HandleFunc("/echouj", echo)
-	http.HandleFunc("/h", httpout)
+	http.HandleFunc("/", httpout)
 	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return

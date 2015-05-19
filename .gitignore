@@ -2,6 +2,7 @@
 *.o
 *.a
 *.so
+/echo
 
 # Folders
 _obj
