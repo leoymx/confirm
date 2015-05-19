@@ -32,6 +32,9 @@ func echo(rw http.ResponseWriter, req *http.Request) {
 func httpout(rw http.ResponseWriter, req *http.Request) {
 	q := req.URL.Query()
 	site := q.Get("site")
+	if len(site) < 1 {
+		site = "127.0.0.1:80/echouj?well=I'm_comming&but=where_are_you?"
+	}
 	log.Printf(" visit http://%s\n", site)
 	resp, err := http.Get("http://" + site)
 	if check_err(err) {
