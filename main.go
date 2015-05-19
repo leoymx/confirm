@@ -7,6 +7,11 @@ import (
 	"net/http"
 )
 
+var (
+	usage = []byte(`<a href="www.shaalx-echouj.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-echouj.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
+		<a href="www.shaalx-echouj.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
+)
+
 func main() {
 	log.Println("ready...")
 	http.HandleFunc("/echouj", echo)
@@ -19,6 +24,7 @@ func main() {
 }
 
 func echo(rw http.ResponseWriter, req *http.Request) {
+	rw.Write(usage)
 	rw.Write([]byte("[ECHO]"))
 	q := req.URL.Query()
 	b, err := json.Marshal(q)
