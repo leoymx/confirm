@@ -88,7 +88,7 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 		avatar, ok := ret["avatar_url"]
 		if ok {
 			avatar_url := fmt.Sprintf("%v", avatar)
-			rw.Write([]byte(`\n<img src="` + avatar_url + `"/>`))
+			rw.Write([]byte("\n<img src=\"" + avatar_url + "\"/>"))
 		}
 	}
 }
