@@ -58,13 +58,13 @@ func randomStr() string {
 func (oa *OAGithub) AuthCode(req *http.Request) (code string, err error) {
 	url_ := req.URL
 	q := url_.Query()
-	state := q.Get("state")
-	fmt.Println(state)
-	fmt.Println(oa.state)
-	if _, ok := oa.state[state]; !ok {
-		return "", errors.New("SCRF Attack!")
-	}
-	delete(oa.state, state)
+	// state := q.Get("state")
+	// fmt.Println(state)
+	// fmt.Println(oa.state)
+	// if _, ok := oa.state[state]; !ok {
+	// 	return "", errors.New("SCRF Attack!")
+	// }
+	// delete(oa.state, state)
 	code = q.Get("code")
 	return code, nil
 }
