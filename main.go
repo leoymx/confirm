@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	. "github.com/shaalx/echo/oauth2"
 	"io/ioutil"
 	"log"
@@ -81,6 +82,15 @@ func signin(rw http.ResponseWriter, req *http.Request) {
 func callback(rw http.ResponseWriter, req *http.Request) {
 	b := OA.NextStep(req)
 	rw.Write(b)
+	var ret map[string]interface{}
+	err := json.Unmarshal(b, &ret)
+	if nil == err {
+		avatar, ok := ret["avatar_url"]
+		if ok {
+			avatar_url := fmt.Sprintf("%v", avatar)
+			rw.Write([]byte(`\n<img src="` + avatar_url + `"/>`))
+		}
+	}
 }
 
 func check_err(err error) bool {
