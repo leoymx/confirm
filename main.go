@@ -26,7 +26,7 @@ func main() {
 	http.HandleFunc("/site", site)
 	http.HandleFunc("/callback", callback)
 	http.HandleFunc("/echouj", echo)
-	err := http.ListenAndServe(":80", nil)
+	err := http.ListenAndServe(":8097", nil)
 	if check_err(err) {
 		return
 	}
