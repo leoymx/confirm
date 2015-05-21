@@ -28,7 +28,7 @@ func NewOAGithub(client_id, client_secret, scope string) *OAGithub {
 		client_secret:    client_secret,
 		scope:            scope,
 		auth_uri:         "https://github.com/login/oauth/authorize",
-		redirect_uri:     "http://120.26.107.150:8097/callback",
+		redirect_uri:     "http://shaalx-echouj.daoapp.io/callback",
 		access_token_uri: "https://github.com/login/oauth/access_token",
 		user_info_uri:    "https://api.github.com/user?access_token",
 		state:            make(map[string]string),
