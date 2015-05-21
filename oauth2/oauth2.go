@@ -59,6 +59,8 @@ func (oa *OAGithub) AuthCode(req *http.Request) (code string, err error) {
 	url_ := req.URL
 	q := url_.Query()
 	state := q.Get("state")
+	fmt.Println(state)
+	fmt.Println(oa.state)
 	if _, ok := oa.state[state]; !ok {
 		return "", errors.New("SCRF Attack!")
 	}

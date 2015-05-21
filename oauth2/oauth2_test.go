@@ -13,5 +13,5 @@ func init() {
 }
 
 func TestAuth(t *testing.T) {
-	t.Log(oa.Auth())
+	t.Log(oa.AuthURL())
 }
