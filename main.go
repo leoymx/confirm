@@ -2,20 +2,30 @@ package main
 
 import (
 	"encoding/json"
+	. "github.com/shaalx/echo/oauth2"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 var (
 	usage = []byte(`<a href="www.shaalx-echouj.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-echouj.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
 		<a href="www.shaalx-echouj.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
+	OA *OAGithub
 )
+
+func init() {
+	OA = NewOAGithub("8ba2991113e68b4805c1", "client_secret", "user")
+}
 
 func main() {
 	log.Println("ready...")
+	http.HandleFunc("/", root)
+	http.HandleFunc("/signin", signin)
+	http.HandleFunc("/site", site)
+	http.HandleFunc("/callback", callback)
 	http.HandleFunc("/echouj", echo)
-	http.HandleFunc("/", httpout)
 	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return
@@ -35,7 +45,12 @@ func echo(rw http.ResponseWriter, req *http.Request) {
 	rw.Write(b)
 }
 
-func httpout(rw http.ResponseWriter, req *http.Request) {
+func root(rw http.ResponseWriter, req *http.Request) {
+	log.Println(req.URL)
+	rw.Write([]byte("[ROOT]" + time.Now().String()))
+}
+
+func site(rw http.ResponseWriter, req *http.Request) {
 	q := req.URL.Query()
 	site := q.Get("site")
 	if len(site) < 1 {
@@ -56,6 +71,15 @@ func httpout(rw http.ResponseWriter, req *http.Request) {
 		rw.Write([]byte(err.Error()))
 		return
 	}
+	rw.Write(b)
+}
+
+func signin(rw http.ResponseWriter, req *http.Request) {
+	http.Redirect(rw, req, OA.AuthURL(), 302)
+}
+
+func callback(rw http.ResponseWriter, req *http.Request) {
+	b := OA.NextStep(req)
 	rw.Write(b)
 }
 
