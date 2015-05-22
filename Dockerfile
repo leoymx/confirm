@@ -6,8 +6,8 @@ WORKDIR /gopath/app
 ENV GOPATH /gopath/app
 ADD . /gopath/app/
 
-RUN go get app
-RUN go install app
+RUN go get github.com/shaalx/echo
+RUN go install github.com/shaalx/echo
 
 EXPOSE 80
-CMD ["/gopath/app/bin/app"]
+CMD ["/gopath/app/bin/echo"]
