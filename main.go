@@ -11,9 +11,8 @@ import (
 )
 
 var (
-	usage = []byte(`<a href="www.shaalx-echouj.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-echouj.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
-		<a href="www.shaalx-echouj.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
-	OA *OAGithub
+	usage = []byte(`<h1>This is the oath branch ,not master branch . from@echo</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n")
+	OA    *OAGithub
 )
 
 func init() {
@@ -22,11 +21,11 @@ func init() {
 
 func main() {
 	log.Println("ready...")
-	http.HandleFunc("/", root)
+	http.HandleFunc("/", site)
 	http.HandleFunc("/signin", signin)
 	http.HandleFunc("/site", site)
 	http.HandleFunc("/callback", callback)
-	http.HandleFunc("/echouj", echo)
+	http.HandleFunc("/echo", echo)
 	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return
@@ -35,7 +34,6 @@ func main() {
 }
 
 func echo(rw http.ResponseWriter, req *http.Request) {
-	rw.Write(usage)
 	rw.Write([]byte("[ECHO]"))
 	q := req.URL.Query()
 	b, err := json.Marshal(q)
@@ -52,10 +50,11 @@ func root(rw http.ResponseWriter, req *http.Request) {
 }
 
 func site(rw http.ResponseWriter, req *http.Request) {
+	rw.Write([]byte(usage))
 	q := req.URL.Query()
 	site := q.Get("site")
 	if len(site) < 1 {
-		site = "127.0.0.1:80/echouj?well=I'm_comming&but=where_are_you?"
+		site = "127.0.0.1:80/echo?well=I'm_comming&but=where_are_you?"
 	}
 	log.Printf(" visit http://%s\n", site)
 	resp, err := http.Get("http://" + site)
