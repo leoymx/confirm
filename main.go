@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	usage = []byte(`<h1>This is the oath branch ,not master branch . from@echo</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n")
+	usage = []byte(`<h1>This is the oauth branch ,not master branch . from@echo:oauth</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n")
 	OA    *OAGithub
 )
 
