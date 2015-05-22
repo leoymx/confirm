@@ -11,8 +11,9 @@ import (
 )
 
 var (
-	usage = []byte(`<h1>This is the oauth branch ,not master branch . from@echo:oauth</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n")
-	OA    *OAGithub
+	usage = []byte(`<h1>This is the oauth branch ,not master branch . from@echo:oauth</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n" + `
+		<a href="/signin" ><h1>GITHUB OAUTH2</h1></a>`)
+	OA *OAGithub
 )
 
 func init() {
@@ -87,7 +88,7 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 		avatar, ok := ret["avatar_url"]
 		if ok {
 			avatar_url := fmt.Sprintf("%v", avatar)
-			rw.Write([]byte(`\n<img src="` + avatar_url + `"/>`))
+			rw.Write([]byte("\n<img src=\"" + avatar_url + "\"/>"))
 		}
 	}
 }
