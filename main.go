@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	. "github.com/shaalx/echo/oauth2"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -89,6 +90,8 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 		if ok {
 			avatar_url := fmt.Sprintf("%v", avatar)
 			rw.Write([]byte("\n<img src=\"" + avatar_url + "\"/>"))
+			t, err := template.ParseFiles("index.tpl")
+			t.Execute(wr, avatar_url)
 		}
 	}
 }
