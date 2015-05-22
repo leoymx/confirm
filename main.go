@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	usage = []byte(`<a href="www.shaalx-echouj.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-echouj.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
-		<a href="www.shaalx-echouj.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
+	usage = []byte(`<a href="www.shaalx-oauths.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-oauths.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
+		<a href="www.shaalx-oauths.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
 	OA *OAGithub
 )
 
