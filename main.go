@@ -91,7 +91,10 @@ func callback(rw http.ResponseWriter, req *http.Request) {
 			avatar_url := fmt.Sprintf("%v", avatar)
 			rw.Write([]byte("\n<img src=\"" + avatar_url + "\"/>"))
 			t, err := template.ParseFiles("index.tpl")
-			t.Execute(wr, avatar_url)
+			if nil != err {
+				return
+			}
+			t.Execute(rw, avatar_url)
 		}
 	}
 }
