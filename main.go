@@ -27,7 +27,7 @@ func main() {
 	http.HandleFunc("/signin", signin)
 	http.HandleFunc("/site", site)
 	http.HandleFunc("/callback", callback)
-	http.HandleFunc("/echouj", echo)
+	http.HandleFunc("/echo", echo)
 	err := http.ListenAndServe(":80", nil)
 	if check_err(err) {
 		return
@@ -56,7 +56,7 @@ func site(rw http.ResponseWriter, req *http.Request) {
 	q := req.URL.Query()
 	site := q.Get("site")
 	if len(site) < 1 {
-		site = "127.0.0.1:80/echouj?well=I'm_comming&but=where_are_you?"
+		site = "127.0.0.1:80/echo?well=I'm_comming&but=where_are_you?"
 	}
 	log.Printf(" visit http://%s\n", site)
 	resp, err := http.Get("http://" + site)
