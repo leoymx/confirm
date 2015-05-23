@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	usage = []byte(`<a href="www.shaalx-oauths.daoapp.io?site=www.baidu.com" ><h1>www.shaalx-oauths.daoapp.io?site=www.baidu.com</h1></a>` + "\n" + `
-		<a href="www.shaalx-oauths.daoapp.io?site=blog.csdn.net/archi_xiao" ><h1>Archi_xiao 's blog (CSDN)</h1></a>` + "\n")
+	usage = []byte(`<h1>This is the oauth branch ,not master branch . from@echo:oauth</h1><a href="https://github.com/shaalx/echo" ><h1>https://github.com/shaalx/echo</h1></a>` + "\n" + `
+		<a href="/signin" ><h1>GITHUB OAUTH2</h1></a>`)
 	OA *OAGithub
 )
 
@@ -36,7 +36,6 @@ func main() {
 }
 
 func echo(rw http.ResponseWriter, req *http.Request) {
-	rw.Write(usage)
 	rw.Write([]byte("[ECHO]"))
 	q := req.URL.Query()
 	b, err := json.Marshal(q)
@@ -53,6 +52,7 @@ func root(rw http.ResponseWriter, req *http.Request) {
 }
 
 func site(rw http.ResponseWriter, req *http.Request) {
+	rw.Write([]byte(usage))
 	q := req.URL.Query()
 	site := q.Get("site")
 	if len(site) < 1 {
@@ -82,16 +82,15 @@ func signin(rw http.ResponseWriter, req *http.Request) {
 
 func callback(rw http.ResponseWriter, req *http.Request) {
 	b := OA.NextStep(req)
-	rw.Write(b)
 	var ret map[string]interface{}
 	err := json.Unmarshal(b, &ret)
 	if nil == err {
 		avatar, ok := ret["avatar_url"]
 		if ok {
 			avatar_url := fmt.Sprintf("%v", avatar)
-			rw.Write([]byte("\n<img src=\"" + avatar_url + "\"/>"))
 			t, err := template.ParseFiles("index.tpl")
 			if nil != err {
+				rw.Write(b)
 				return
 			}
 			t.Execute(rw, avatar_url)
