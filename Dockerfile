@@ -6,7 +6,5 @@ WORKDIR /gopath/app
 ENV GOPATH /gopath/app
 ADD . /gopath/app/
 
-RUN go get github.com/Unknwon/macaron
-
-EXPOSE 9088
+EXPOSE 80
 CMD ["/gopath/app/bin/echo"]
