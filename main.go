@@ -20,7 +20,7 @@ func signin(rw http.ResponseWriter, req *http.Request) {
 
 func main() {
 	log.Println("server start...")
-	// http.Handle("/css/", http.FileServer(http.Dir("templates")))
+	http.Handle("/css/", http.FileServer(http.Dir("templates")))
 	http.Handle("/", http.FileServer(http.Dir("templates")))
 	http.HandleFunc("/signin", signin)
 	http.ListenAndServe(":80", nil)

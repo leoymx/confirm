@@ -1,0 +1,184 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="tankGame.css">
+		
+	</head>
+	<body onkeydown="dosomething(event)">
+		<div id="mytank" style="background-position: 0px 40px;left:0px;top: 0px;" class="tank_div">
+		</div>
+		<script type="text/javascript">
+			function mytank(x,y,direction,speed) {
+				this.x = x;
+				this.y = y;
+				this.direction = direction;
+				this.speed = speed;
+
+				document.getElementById("mytank").style.left = this.x + "px";
+				document.getElementById("mytank").style.top = this.y + "px";
+				document.getElementById("mytank").style.backgroundPositionY = this.direction + "px";
+
+				this.move = function move(e){
+					keyCode=e.keyCode;
+					switch (keyCode) {
+						case 37: //向左走
+						case 65:
+							document.getElementById("mytank").style.backgroundPositionY = "0px";
+							this.x -= speed;
+							this.direction = 0;
+							break;
+						case 83: //向下走
+						case 40:
+							document.getElementById("mytank").style.backgroundPositionY = "120px";
+							this.y += speed;
+							this.direction = 120;
+							break;
+						case 39: //向右走
+						case 68:
+							document.getElementById("mytank").style.backgroundPositionY = "80px";
+							this.x += speed;
+							this.direction = 80;
+							break;
+						case 38: //向上走
+						case 87:
+							document.getElementById("mytank").style.backgroundPositionY = "40px";
+							this.y -= speed;
+							this.direction = 40;
+							break;
+					}
+					document.getElementById("mytank").style.left = this.x + "px";
+					document.getElementById("mytank").style.top = this.y + "px";
+
+				}
+
+			}
+			
+			function bullet(x,y,direction,speed) {
+				
+				this.myshot = document.createElement("div");
+				this.myshot.setAttribute("name","myshot");
+				this.x = x + 18;
+				this.y = y + 18;
+				this.direction = direction;
+				this.speed = speed;
+				this.myshot.style.top = this.y + "px";
+				this.myshot.style.left = this.x + "px";
+				//this.myshot.setAttribute("style","top: "+this.y+"px"+"left: "+this.x+"px");
+				this.myshot.setAttribute("class","shot_div");
+				
+				document.body.appendChild(this.myshot);
+				this.shot = function shot() {
+					switch (direction) {
+						case 0: //向左
+							if(this.x > -4 && this.x < document.body.clientWidth) {
+								this.x -= speed;
+							}else {
+								window.clearInterval(shot);
+								if(document.getElementById("myshot") != null)
+								document.getElementById("myshot").parentNode.removeChild(document.getElementById("myshot"));
+							}
+							break;
+						case 120: //向下
+							if(this.y > -4 && this.y < (document.body.clientHeight)) {
+								this.y += speed;
+							}else {
+								window.clearInterval(shot);
+								if(document.getElementById("myshot") != null)
+								document.getElementById("myshot").parentNode.removeChild(document.getElementById("myshot"));
+							}
+							break;
+						case 80: //向右
+							if(this.x > -4 && this.x < (document.body.clientWidth)) {
+								this.x += speed;
+							}else {
+								window.clearInterval(shot);
+								if(document.getElementById("myshot") != null)
+								document.getElementById("myshot").parentNode.removeChild(document.getElementById("myshot"));
+							}
+							break;
+						case 40: //向上
+							if(this.y > -4 && this.y < document.body.clientHeight) {
+								this.y -= speed;
+							}else {
+								window.clearInterval(shot);
+								if(document.getElementById("myshot") != null)
+								document.getElementById("myshot").parentNode.removeChild(document.getElementById("myshot"));
+							}
+							break;
+					}
+					this.myshot.style.left = this.x + "px";
+					this.myshot.style.top = this.y + "px";
+					if(document.getElementById("tanks0").style.left-this.x<3 && this.x-document.getElementById("tanks0").style.left<40 && this.y-document.getElementById("tanks0").style.top<40 && this.y-document.getElementById("tanks0").style.top>3) {
+						window.alert("打中了！");
+						window.clearInterval(shot);
+						this.myshot.parentNode.removeChild(this.myshot);
+					}
+				}
+			}
+			var i = 0;
+			function tanks(x,y,direction,speed) {
+				this.x = x;
+				this.y = y;
+				this.direction = direction;
+				this.speed = speed;
+				this.tanks = document.createElement("div");
+				this.tanks.id = "tanks" + (i++);
+				this.tanks.style.left = this.x + "px";
+				this.tanks.style.top = this.y + "px";
+				this.tanks.style.backgroundPositionY = this.direction + "px";
+				this.tanks.setAttribute("class","tanks_div");
+				document.body.appendChild(this.tanks);
+				this.move = function move(randomNum){
+					
+					if(randomNum<3 && this.x > 0){ //向左走
+						this.tanks.style.backgroundPositionY = "0px";
+						this.x -= speed;
+						this.direction = 0;
+					}else if(randomNum<5 && this.y < document.body.clientHeight-40){ //向下走
+						this.tanks.style.backgroundPositionY = "120px";
+						this.y += speed;
+						this.direction = 120;
+					}else if(randomNum<8 && this.x < document.body.clientWidth-40){ //向右走
+						this.tanks.style.backgroundPositionY = "80px";
+						this.x += speed;
+						this.direction = 80;
+					}else if(randomNum<=10 && this.y > 0) {  //向上走
+						this.tanks.style.backgroundPositionY = "40px";
+						this.y -= speed;
+						this.direction = 40;
+					}
+					this.tanks.style.left = this.x + "px";
+					this.tanks.style.top = this.y + "px";
+
+				}
+
+			}
+
+			var shot;
+			function dosomething(e) {
+				keyCode=e.keyCode;
+				if(keyCode == 13 || keyCode == 32) {
+					var myshot = new bullet(myhero.x, myhero.y, myhero.direction, myhero.speed);
+					shot = window.setInterval(function(){myshot.shot();},10);
+				}else if(keyCode==37||keyCode==65||keyCode==83||keyCode==40||keyCode==39||keyCode==68||keyCode==38||keyCode==87) {
+					myhero.move(e);
+				}
+					
+			}
+			var myhero = new mytank(400,400,40,3);
+			var tanks = new tanks(Math.random()*(document.body.clientWidth-40),Math.random()*(document.body.clientHeight-40),120,15);
+			var flag = 0;
+			var randomNum = Math.random() * 10;
+			var newtank = window.setInterval(function(){
+				if(flag < 50){
+					flag++;
+				}else {
+					randomNum = Math.random() * 10;
+					flag = 0;
+					
+				}
+				tanks.move(randomNum);
+			},100);
+			//var tanks = new tanks(400,400,120,5);
+		</script>
+	</body>
+</html>
