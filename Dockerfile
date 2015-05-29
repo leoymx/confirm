@@ -1,10 +1,13 @@
 FROM google/golang
-MAINTAINER Shaalx Shi "60026668.m@daocloud.io"
+MAINTAINER wangwei
 
 # Build app
 WORKDIR /gopath/app
 ENV GOPATH /gopath/app
 ADD . /gopath/app/
 
+RUN go get github.com/leoymx/confirm
+RUN go install github.com/leoymx/confirm
+
 EXPOSE 80
-CMD ["/gopath/app/bin/echo"]
+CMD ["/gopath/app/bin/confirm"]
